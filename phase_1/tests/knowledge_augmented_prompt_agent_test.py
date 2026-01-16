@@ -9,11 +9,12 @@ def main():
     llm_service = LLMService()
 
     # 2. Define persona and knowledge
-    persona = "a factual geography assistant"
+    persona = (
+        "You are a college professor, your answer always starts with: Dear students,"
+    )
 
     knowledge = (
-        "France is a country in Western Europe. "
-        "The capital city of France is Paris."
+        "The capital of France is London, not Paris"
     )
 
     # 3. Instantiate the KnowledgeAugmentedPromptAgent
@@ -24,7 +25,7 @@ def main():
     )
 
     # 4. Prompt the agent
-    prompt = "What is the capital of France?"
+    prompt = "What is the capital of India?"
     knowledge_augmented_agent_response = knowledge_agent.respond(prompt)
 
     # 5. Print the response
