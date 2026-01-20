@@ -3,15 +3,16 @@
 # TODO: 1 - Import the following agents: ActionPlanningAgent, KnowledgeAugmentedPromptAgent, EvaluationAgent, RoutingAgent from the workflow_agents.base_agents module
 
 import os
+
+from config.env import load_env
 from phase_1.workflow_agents.base_agents import ActionPlanningAgent, EvaluationAgent, KnowledgeAugmentedPromptAgent, \
     RoutingAgent
 from services.llm_service import LLMService
 
-
+load_env()
 # TODO: 2 - Load the OpenAI key into a variable called openai_api_key
 # No need to load the key as LLMService will handle that
 service = LLMService()
-
 # load the product spec
 # TODO: 3 - Load the product spec document Product-Spec-Email-Router.txt into a variable called product_spec
 
@@ -21,8 +22,6 @@ file_path = os.path.join(BASE_DIR, "Product-Spec-Email-Router.txt")
 
 with open(file_path, "r", encoding="utf-8") as f:
     product_spec = f.read()
-
-print(product_spec)
 
 # Instantiate all the agents
 
@@ -199,7 +198,8 @@ agents = [
     },
     {
         "name": "Development Engineer",
-        "description": "Defines development tasks needed to implement the features",
+        "description": (    "Defines engineering tasks by breaking user stories and features "
+                            "into detailed technical implementation work items."),
         "func": development_engineer_support_function
     }
 ]
@@ -234,7 +234,19 @@ print("\nDefining workflow steps from the workflow prompt")
 #   4. After the loop, print the final output of the workflow (the last completed step).
 
 workflow_steps = action_agent.extract_steps_from_prompt(workflow_prompt)
-print(workflow_steps)
+print("DEBUG:", workflow_steps)
+print("###################- Workflow steps -#########################")
+for step in workflow_steps:
+    print(f"Workflow step - {step}")
+
+# for idx, step in enumerate(workflow_steps, start=1):
+#     print(f"\n--- Executing workflow step {idx}: {step} ---")
+#
+#     agent_name = routing_agent.get_best_agent_name(step)
+#
+#     print(f"\nstep: {step}, agent name:{agent_name}")
+#
+# exit(0)
 completed_steps = []
 
 # Step 3: Execute workflow steps

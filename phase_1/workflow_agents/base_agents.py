@@ -332,6 +332,7 @@ class RoutingAgent:
 
         # Pre-compute embeddings for agent descriptions
         for agent in self.agents:
+            print(f"Agent Description: {agent["description"]}")
             agent["embedding"] = self.get_embedding(agent["description"])
 
     def get_embedding(self, text: str) -> np.ndarray:
@@ -376,6 +377,46 @@ class RoutingAgent:
         print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
         return best_agent["func"](user_input)
 
+    def get_best_agent(self, user_input: str):
+        """
+        Return the best matching agent (dict) and similarity score.
+        """
+
+        input_emb = self.get_embedding(user_input)
+
+        best_agent = None
+        best_score = -1.0
+
+        for agent in self.agents:
+            agent_emb = agent.get("embedding")
+            if agent_emb is None:
+                continue
+
+            similarity = np.dot(input_emb, agent_emb) / (
+                    np.linalg.norm(input_emb) * np.linalg.norm(agent_emb)
+            )
+
+            print(f"[Router] Similarity with {agent['name']}: {similarity:.3f}")
+
+            if similarity > best_score:
+                best_score = similarity
+                best_agent = agent
+
+        return best_agent, best_score
+
+    def get_best_agent_name(self, user_input: str) -> str:
+        """
+        Return the name of the best matching agent.
+        """
+
+        best_agent, best_score = self.get_best_agent(user_input)
+
+        if best_agent is None:
+            return "No suitable agent found"
+
+        print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
+        return best_agent["name"]
+
 
 class ActionPlanningAgent:
     """
@@ -401,12 +442,13 @@ class ActionPlanningAgent:
 
         system_message = (
             "You are an action planning agent. "
-            "Using your knowledge, extract from the user prompt the steps requested "
-            "to complete the action the user is asking for. "
-            "Return the steps as a numbered or bullet list. Strict Note: Do not include any other information other than numbered list"
-            "Use ONLY the steps present in your knowledge. "
-            "Do not invent steps. "
-            "Do not modify step information. "
+            "Using ONLY the provided knowledge, identify ONLY the steps that are "
+            "directly relevant to the user's request. "
+            "Do NOT include unrelated planning steps. "
+            "Do NOT expand, split, or rewrite steps. "
+            "Do NOT invent new steps. "
+            "Return the result strictly as a numbered list. "
+            "If only one step is relevant, return only that step. "
             "Forget all previous context.\n\n"
             f"This is your knowledge:\n{self.knowledge}"
         )
