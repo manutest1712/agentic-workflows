@@ -1,0 +1,9 @@
+C:\Projects\Agentic\agentic-workflows\.venv\Scripts\python.exe C:\Projects\Agentic\agentic-workflows\phase_1\tests\direct_prompt_agent_test.py 
+The Prompt: What is the Capital of France?
+Agent Response:
+The capital of France is **Paris**.
+
+Knowledge Source Explanation:
+The agent answered this question using general world knowledge embedded in the underlying Large Language Model (LLM). This information was learned during the model’s training on a large corpus of publicly available, licensed, and human-created text, rather than from any external database or real-time lookup.
+
+Process finished with exit code 0

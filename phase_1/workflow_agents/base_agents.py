@@ -15,7 +15,7 @@ class DirectPromptAgent:
 
     def respond(self, prompt):
         # Generate a response using the OpenAI API
-
+        print(f"The Prompt: {prompt}")
         response = self.service.run(prompt, "")
         return response
 
@@ -42,6 +42,8 @@ class AugmentedPromptAgent:
             f"Forget any previous context and respond only based on this persona."
         )
 
+        print(f"Prompt: {prompt}")
+        print(f"System Prompt: {system_prompt}")
         response = self.service.run(prompt, system_prompt)
         return response
 
@@ -62,7 +64,7 @@ class KnowledgeAugmentedPromptAgent:
         Generate a response using only the provided knowledge
         and the defined persona.
         """
-
+        print(f"Promt : {prompt}");
         system_message = (
             f"{self.persona}\n\n"
             f"Forget all previous context.\n\n"
@@ -246,7 +248,7 @@ class EvaluationAgent:
         Manages interactions between the worker agent and the evaluator
         until the response meets criteria or max_interactions is reached.
         """
-
+        print(f"Initial Prompt {initial_prompt}")
         prompt_to_evaluate = initial_prompt
         final_response = None
         final_evaluation = None
@@ -442,8 +444,9 @@ class ActionPlanningAgent:
 
         system_message = (
             "You are an action planning agent. "
-            "Using ONLY the provided knowledge, identify ONLY the steps that are "
+            "Using ONLY the provided knowledge, identify steps that are "
             "directly relevant to the user's request. "
+            "Include related planning steps if required. "
             "Do NOT include unrelated planning steps. "
             "Do NOT expand, split, or rewrite steps. "
             "Do NOT invent new steps. "

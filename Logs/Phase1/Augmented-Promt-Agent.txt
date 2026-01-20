@@ -1,0 +1,89 @@
+C:\Projects\Agentic\agentic-workflows\.venv\Scripts\python.exe C:\Projects\Agentic\agentic-workflows\phase_1\tests\routing_agent_test.py 
+Agent Description: Questions about Texas cities, history, and places in Texas
+Agent Description: Questions about European history, cities, and countries
+Agent Description: Math word problems, arithmetic, and calculations
+
+============================================================
+User Prompt: Tell me about the history of Rome, Texas
+[Router] Similarity with texas_agent: 0.456
+[Router] Similarity with europe_agent: 0.254
+[Router] Similarity with math_agent: -0.009
+[Router] Best agent: texas_agent (score=0.456)
+Promt : Tell me about the history of Rome, Texas
+System message -- KnowledgeAagent - Texas history expert.
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+You know everything about Texas.
+
+Answer the prompt based on this knowledge, not your own.
+Final Answer:
+Certainly! Here’s a summary of the history of Rome, Texas, based on Texas history:
+
+**Rome, Texas** is a small, unincorporated community located in Smith County, in East Texas. It should not be confused with the larger city of New Rome or with Roanoke, Texas. Rome was established in the late 19th century, primarily as a rural farming community. The area was settled by pioneers attracted to the fertile land and the opportunities for agriculture.
+
+A post office operated in Rome from 1879 to 1887, serving as a hub for local residents. The community never grew large, and after the post office closed, Rome remained a small rural settlement. Over time, as transportation and economic patterns shifted, many residents moved to larger nearby towns such as Tyler.
+
+Today, Rome, Texas, is considered a ghost town, with only a few scattered homes and little evidence of its former activity. It stands as a reminder of the many small agricultural communities that once dotted the Texas landscape but faded as populations shifted and economies changed.
+
+If you meant a different Rome in Texas, such as Old Rome (sometimes referenced in Wise County), let me know and I can provide information on that as well!
+
+============================================================
+User Prompt: Tell me about the history of Rome, Italy
+[Router] Similarity with texas_agent: 0.278
+[Router] Similarity with europe_agent: 0.393
+[Router] Similarity with math_agent: 0.028
+[Router] Best agent: europe_agent (score=0.393)
+Promt : Tell me about the history of Rome, Italy
+System message -- KnowledgeAagent - European history professor.
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+You know everything about Europe.
+
+Answer the prompt based on this knowledge, not your own.
+Final Answer:
+Certainly! Rome, Italy, has a history spanning over 2,700 years and is one of the most influential cities in European and world history.
+
+**Ancient Rome:**  
+Rome was traditionally founded in 753 BCE. It began as a small settlement on the Palatine Hill and grew into the Roman Kingdom, then the Roman Republic (509–27 BCE), and finally the Roman Empire (27 BCE–476 CE). During the Republic, Rome expanded its territory across the Italian peninsula and later throughout the Mediterranean. The Empire saw Rome become the capital of a vast territory stretching from Britain to the Middle East and North Africa. The city was renowned for its architecture, engineering, and as a center of law and governance.
+
+**Late Antiquity and Middle Ages:**  
+After the fall of the Western Roman Empire in 476 CE, Rome experienced decline and was ruled by various powers, including the Ostrogoths and Byzantines. In the Middle Ages, Rome became the center of the Papal States and the seat of the Roman Catholic Church, with the Pope as a major political and spiritual leader. The city was a destination for pilgrims and a center of learning and art.
+
+**Renaissance and Baroque Periods:**  
+During the Renaissance (14th–17th centuries), Rome flourished as a center of art, culture, and architecture, attracting artists like Michelangelo and Raphael. The Baroque period saw the construction of grand churches, fountains, and palaces.
+
+**Modern Era:**  
+In the 19th century, Rome was a focal point of the Italian unification movement (Risorgimento). In 1870, it became the capital of the newly unified Kingdom of Italy. In the 20th century, Rome was the seat of the Fascist regime under Mussolini and suffered during World War II. After the war, it became the capital of the Italian Republic.
+
+**Today:**  
+Rome is the capital of Italy and a major European city, known for its historical sites such as the Colosseum, Roman Forum, Vatican City, and its vibrant cultural life. It remains a symbol of European heritage and history.
+
+============================================================
+User Prompt: One story takes 2 days, and there are 20 storiesf=2+3/5*38. What is the value of f?
+[Router] Similarity with texas_agent: 0.088
+[Router] Similarity with europe_agent: 0.117
+[Router] Similarity with math_agent: 0.256
+[Router] Best agent: math_agent (score=0.256)
+Promt : One story takes 2 days, and there are 20 storiesf=2+3/5*38. What is the value of f?
+System message -- KnowledgeAagent - Mathematics Teacher.
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+You know everything about math, you take prompts with numbers, extract math formulas, and show the answer without explanation
+
+Answer the prompt based on this knowledge, not your own.
+Final Answer:
+f = 2 + 3/5 × 38  
+= 2 + (3 × 38) / 5  
+= 2 + 114 / 5  
+= 2 + 22.8  
+= 24.8
+
+f = 24.8
+
+Process finished with exit code 0

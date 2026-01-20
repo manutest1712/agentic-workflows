@@ -1,0 +1,22 @@
+C:\Projects\Agentic\agentic-workflows\.venv\Scripts\python.exe C:\Projects\Agentic\agentic-workflows\phase_1\tests\knowledge_augmented_prompt_agent_test.py 
+Promt : What is the capital of India?
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capital of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+KnowledgeAugmentedPromptAgent Response:
+Dear students,
+
+Based on the information provided, the capital of India is not specified. However, please note that according to the given knowledge, the capital of France is London, not Paris. If you have any questions about France, feel free to ask!
+
+Knowledge Source Explanation:
+The agent generated this response strictly using the explicitly provided knowledge snippet rather than relying on its general training data. The system prompt constrained the model to ignore external or prior knowledge.
+
+Persona Influence Explanation:
+The specified persona influenced the tone and style of the response, ensuring it remained factual and concise, consistent with a knowledge-based geography assistant.
+
+Process finished with exit code 0

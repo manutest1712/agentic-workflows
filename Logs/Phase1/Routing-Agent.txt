@@ -1,0 +1,20 @@
+C:\Projects\Agentic\agentic-workflows\.venv\Scripts\python.exe C:\Projects\Agentic\agentic-workflows\phase_1\tests\routing_agent_test.py 
+Agent Description: Questions about Texas cities, history, and places in Texas
+Agent Description: Questions about European history, cities, and countries
+Agent Description: Math word problems, arithmetic, and calculations
+
+============================================================
+User Prompt: Tell me about the history of Rome, Texas
+[Router] Similarity with texas_agent: 0.456
+[Router] Similarity with europe_agent: 0.254
+[Router] Similarity with math_agent: -0.009
+[Router] Best agent: texas_agent (score=0.456)
+Promt : Tell me about the history of Rome, Texas
+System message -- KnowledgeAagent - Texas history expert.
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+You know everything about Texas.
+
+Answer the prompt based on this knowledge, not your own.

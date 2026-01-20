@@ -1,0 +1,260 @@
+C:\Projects\Agentic\agentic-workflows\.venv\Scripts\python.exe C:\Projects\Agentic\agentic-workflows\phase_1\tests\evaluation_agent_test.py 
+Initial Prompt What is the capital of France?
+
+--- Interaction 1 ---
+Step 1: Worker agent generates a response. Prompt What is the capital of France?
+Promt : What is the capital of France?
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capitol of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+Worker Agent Response:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+Evaluator Agent Evaluation:
+--No--
+
+Explanation: The answer is factually incorrect. The capital of France is Paris, not London. Therefore, it does not meet the criteria of being factually correct and clearly stating the capital of France.
+Instructions to fix:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Ensure that the answer clearly and unambiguously states that Paris is the capital of France.
+3. Remove any reference to London as the capital of France.
+4. Optionally, provide a brief explanation or supporting fact, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+
+--- Interaction 2 ---
+Step 1: Worker agent generates a response. Prompt Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Ensure that the answer clearly and unambiguously states that Paris is the capital of France.
+3. Remove any reference to London as the capital of France.
+4. Optionally, provide a brief explanation or supporting fact, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+Promt : Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Ensure that the answer clearly and unambiguously states that Paris is the capital of France.
+3. Remove any reference to London as the capital of France.
+4. Optionally, provide a brief explanation or supporting fact, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capitol of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+Worker Agent Response:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+Evaluator Agent Evaluation:
+--No--
+
+Explanation: The answer is factually incorrect. The capital of France is Paris, not London. The response fails to clearly and correctly state the capital of France.
+Instructions to fix:
+Instructions to Correct the Answer:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct information: "the capital of France is Paris."
+2. Remove any reference to London as the capital of France.
+3. Ensure the answer clearly and accurately states that Paris is the capital of France.
+4. Optionally, provide a brief supporting statement, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+
+--- Interaction 3 ---
+Step 1: Worker agent generates a response. Prompt Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Instructions to Correct the Answer:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct information: "the capital of France is Paris."
+2. Remove any reference to London as the capital of France.
+3. Ensure the answer clearly and accurately states that Paris is the capital of France.
+4. Optionally, provide a brief supporting statement, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+Promt : Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Instructions to Correct the Answer:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct information: "the capital of France is Paris."
+2. Remove any reference to London as the capital of France.
+3. Ensure the answer clearly and accurately states that Paris is the capital of France.
+4. Optionally, provide a brief supporting statement, such as: "Paris is the largest city in France and serves as its political, economic, and cultural center."
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capitol of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+Worker Agent Response:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+Evaluator Agent Evaluation:
+--No--
+
+Explanation: The answer is factually incorrect. The capital of France is Paris, not London. The response fails to clearly and correctly state the capital of France as required by the criteria.
+Instructions to fix:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+
+--- Interaction 4 ---
+Step 1: Worker agent generates a response. Prompt Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+Promt : Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capitol of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+Worker Agent Response:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+Evaluator Agent Evaluation:
+--No--
+
+Explanation: The answer is factually incorrect. The capital of France is Paris, not London. The response fails to clearly and correctly state the capital of France as required by the criteria.
+Instructions to fix:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+
+--- Interaction 5 ---
+Step 1: Worker agent generates a response. Prompt Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+Promt : Original prompt:
+What is the capital of France?
+
+Previous answer:
+Dear students,
+
+According to the provided information, the capital of France is London, not Paris.
+
+Apply ONLY the following corrections:
+Correction Instructions:
+
+1. Replace the incorrect statement "the capital of France is London, not Paris" with the correct statement: "the capital of France is Paris."
+2. Remove any reference suggesting that London is the capital of France.
+3. Ensure the answer clearly and unambiguously states that Paris is the capital of France.
+4. Optionally, provide a brief supporting explanation, such as: "Paris is the largest city in France and serves as its political, cultural, and economic center."
+System message -- KnowledgeAagent - You are a college professor, your answer always starts with: Dear students,
+
+Forget all previous context.
+
+Use only the following knowledge to answer, do not use your own knowledge:
+The capitol of France is London, not Paris
+
+Answer the prompt based on this knowledge, not your own.
+Worker Agent Response:
+Dear students,
+
+The capital of France is Paris. Paris is the largest city in France and serves as its political, cultural, and economic center.
+Evaluator Agent Evaluation:
+--Yes--
+
+Explanation:  
+The answer is factually correct, as it states that the capital of France is Paris. It also clearly identifies Paris as the capital and provides additional relevant information.
+✅ Final solution accepted.
+
+===== Evaluation Result =====
+Final Response:
+Dear students,
+
+The capital of France is Paris. Paris is the largest city in France and serves as its political, cultural, and economic center.
+
+Evaluation:
+--Yes--
+
+Explanation:  
+The answer is factually correct, as it states that the capital of France is Paris. It also clearly identifies Paris as the capital and provides additional relevant information.
+
+Iterations Used: 5
+
+Process finished with exit code 0

@@ -160,6 +160,7 @@ development_engineer_evaluation_agent = EvaluationAgent(
         "Estimated Effort: Time or complexity estimation\n"
         "Dependencies: Any tasks that must be completed first\n"
         "Tasks must be implementable, unambiguous, and derived from the defined features."
+        "Ensure that all tasks are included and double check that nothing is missed."
     ),
     worker_agent=development_engineer,
     max_interactions=10
@@ -193,7 +194,10 @@ agents = [
     },
     {
         "name": "Program Manager",
-        "description": "Groups user stories into product features",
+         "description": (
+        "Groups user stories into product features and compiles user stories, "
+        "features, and engineering tasks into a complete project plan."
+        ),
         "func": program_manager_support_function
     },
     {
@@ -219,7 +223,16 @@ routing_agent = RoutingAgent(service=service, agents=agents)
 print("\n*** Workflow execution started ***\n")
 # Workflow Prompt
 # ****
-workflow_prompt = "What would the development tasks for this product be?"
+#workflow_prompt = "What would the development tasks for this product be?"
+workflow_prompt = (
+    "You are asked to generate a complete project plan for the Email Router product "
+    "based strictly on the provided product specification.\n\n"
+    "Your output must include the following sections, in this exact order:\n\n"
+    "1. USER STORIES\n"
+    "2. PRODUCT FEATURES\n"
+    "3. ENGINEERING TASKS\n"
+    "4. COMPLETE PROJECT PLAN\n"
+)
 # ****
 print(f"Task to complete in this workflow, workflow prompt = {workflow_prompt}")
 
