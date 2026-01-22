@@ -1,10 +1,14 @@
+import os
 from datetime import datetime
 
 import pandas as pd
+from langchain_openai import OpenAI
+
 from services.llm_service import LLMService
 import csv
 import numpy as np
 from typing import List, Dict
+from openai import OpenAI
 
 # DirectPromptAgent class definition
 class DirectPromptAgent:
@@ -242,6 +246,13 @@ class EvaluationAgent:
         self.evaluation_criteria = evaluation_criteria
         self.worker_agent = worker_agent
         self.max_interactions = max_interactions
+        self.client = OpenAI(
+            base_url=os.getenv(
+                "OPENAI_BASE_URL",
+                "https://openai.vocareum.com/v1"
+            ),
+            api_key=os.getenv("OPENAI_API_KEY"),
+        )
 
     def evaluate(self, initial_prompt: str) -> dict:
         """
@@ -270,10 +281,23 @@ class EvaluationAgent:
             )
 
             # 5. Evaluation message structure (temperature=0 via LLMService)
-            final_evaluation = self.service.run(
-                prompt=evaluation_prompt,
-                system_message=self.persona
-            )
+            final_evaluation = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": self.persona},
+                    {"role": "user", "content": evaluation_prompt},
+                ],
+                temperature=0
+            ).choices[0].message.content
+
+            # final_evaluation = self.client.chat.completions.create(
+            #     model="gpt-3.5-turbo",
+            #     messages=[
+            #         {"role": "system", "content": self.persona},
+            #         {"role": "user", "content": evaluation_prompt},
+            #     ],
+            #     temperature=0
+            # ).choices[0].message.content
 
             print(f"Evaluator Agent Evaluation:\n{final_evaluation}")
 
@@ -289,10 +313,19 @@ class EvaluationAgent:
                 f"Provide clear instructions to correct the answer."
             )
 
-            instructions = self.service.run(
-                prompt=correction_prompt,
-                system_message="You are an expert providing correction instructions."
-            )
+            instructions = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are an expert providing correction instructions."},
+                    {"role": "user", "content": correction_prompt},
+                ],
+                temperature=0
+            ).choices[0].message.content
+
+            # self.service.run(
+            #     prompt=correction_prompt,
+            #     system_message="You are an expert providing correction instructions."
+            # )
 
             print(f"Instructions to fix:\n{instructions}")
 
