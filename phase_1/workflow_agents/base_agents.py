@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from enum import Enum
 
 import pandas as pd
 from langchain_openai import OpenAI
@@ -22,6 +23,37 @@ class DirectPromptAgent:
         print(f"The Prompt: {prompt}")
         response = self.service.run(prompt, "")
         return response
+
+
+class WorkflowStepClassifierAgent:
+    def __init__(self, service: LLMService):
+        self.service = service
+
+    def is_user_story(self, promt: str):
+        SYSTEM_PROMPT = """
+        You are a strict workflow step classification agent.
+
+        Your task is to determine whether the given text indicates the USER STORIES step
+        in a product development workflow.
+
+        Rules:
+        1. Respond YES only if the text explicitly refers to the USER STORIES phase.
+        2. Do NOT infer intent.
+        3. This is NOT about user story content.
+
+        Output:
+        Respond with ONLY one word: YES or NO.
+        """
+        return self.respond(promt, SYSTEM_PROMPT)
+
+    def respond(self, prompt: str, system_message: str):
+        response = self.service.run(prompt, system_message)
+        result = response.strip().upper()
+
+        if result == "YES":
+            return True
+
+        return False
 
 
 # AugmentedPromptAgent class definition
