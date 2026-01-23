@@ -4,7 +4,7 @@
 
 import os
 
-from Exceptions.exceptions import MissingUserStoriesError
+from Exceptions.exceptions import MissingUserStoriesError, MissingFeaturesError, MissingTasksError
 from config.env import load_env
 from phase_1.workflow_agents.base_agents import ActionPlanningAgent, EvaluationAgent, KnowledgeAugmentedPromptAgent, \
     RoutingAgent, WorkflowStepClassifierAgent
@@ -56,49 +56,7 @@ action_agent = ActionPlanningAgent(
 
 
 
-# Development Engineer - Knowledge Augmented Prompt Agent
-persona_dev_engineer = "You are a Development Engineer, you are responsible for defining the development tasks for a product."
-knowledge_dev_engineer = "Development tasks are defined by identifying what needs to be built to implement each user story."
-# Instantiate a development_engineer_knowledge_agent using 'persona_dev_engineer' and 'knowledge_dev_engineer'
-# (This is a necessary step before TODO 9. Students should add the instantiation code here.)
 
-development_engineer = KnowledgeAugmentedPromptAgent(
-    service=service,
-    persona=persona_dev_engineer,
-    knowledge=knowledge_dev_engineer
-)
-
-# Development Engineer - Evaluation Agent
-persona_dev_engineer_eval = "You are an evaluation agent that checks the answers of other worker agents."
-# TODO: 9 - Instantiate a development_engineer_evaluation_agent using 'persona_dev_engineer_eval' and the evaluation criteria below.
-#                      "The answer should be tasks following this exact structure: " \
-#                      "Task ID: A unique identifier for tracking purposes\n" \
-#                      "Task Title: Brief description of the specific development work\n" \
-#                      "Related User Story: Reference to the parent user story\n" \
-#                      "Description: Detailed explanation of the technical work required\n" \
-#                      "Acceptance Criteria: Specific requirements that must be met for completion\n" \
-#                      "Estimated Effort: Time or complexity estimation\n" \
-#                      "Dependencies: Any tasks that must be completed first"
-# For the 'agent_to_evaluate' parameter, refer to the provided solution code's pattern.
-
-development_engineer_evaluation_agent = EvaluationAgent(
-    service=service,
-    persona=persona_dev_engineer_eval,
-    evaluation_criteria=(
-        "The answer should be tasks following this exact structure:\n"
-        "Task ID: A unique identifier for tracking purposes\n"
-        "Task Title: Brief description of the specific development work\n"
-        "Related User Story: Reference to the parent user story\n"
-        "Description: Detailed explanation of the technical work required\n"
-        "Acceptance Criteria: Specific requirements that must be met for completion\n"
-        "Estimated Effort: Time or complexity estimation\n"
-        "Dependencies: Any tasks that must be completed first\n"
-        "Tasks must be implementable, unambiguous, and derived from the defined features."
-        "Ensure that all tasks are included and double check that nothing is missed."
-    ),
-    worker_agent=development_engineer,
-    max_interactions=10
-)
 
 # Routing Agent
 # TODO: 10 - Instantiate a routing_agent. You will need to define a list of agent dictionaries (routes) for Product Manager, Program Manager, and Development Engineer. Each dictionary should contain 'name', 'description', and 'func' (linking to a support function). Assign this list to the routing_agent's 'agents' attribute.
@@ -143,8 +101,7 @@ def product_manager_support_function(step):
         max_interactions=10
     )
 
-    response = product_manager.respond(step)
-    validated_response = product_manager_evaluation_agent.evaluate(response)
+    validated_response = product_manager_evaluation_agent.evaluate(step)
     user_stories = validated_response["final_response"]
     workflow_context["user_stories"] = user_stories
 
@@ -212,14 +169,7 @@ def program_manager_feature_support_function(step):
         max_interactions=10
     )
 
-    response = program_manager.respond(step)
-    program_manager.knowledge = (
-        f"Previous User Stories:\n{ workflow_context["user_stories"]}\n\n"
-        "Features of a product are defined by organizing similar user stories "
-        "into cohesive groups derived strictly from the Email Router product specification."
-    )
-
-    validated_response = program_manager_evaluation_agent.evaluate(response)
+    validated_response = program_manager_evaluation_agent.evaluate(step)
 
     product_features = validated_response["final_response"]
     workflow_context["features"] = product_features
@@ -230,67 +180,167 @@ def program_manager_feature_support_function(step):
     print(print_product_features)
     return product_features
 
+
 def program_manager_project_plan_support_function(step):
+
+    # ---- Validation: Required workflow inputs ----
+    if "user_stories" not in workflow_context or not workflow_context["user_stories"]:
+        raise MissingUserStoriesError(
+            "Program Manager step requires user stories, "
+            "but workflow_context['user_stories'] is not set."
+        )
+
+    if "features" not in workflow_context or not workflow_context["features"]:
+        raise MissingFeaturesError(
+            "Program Manager step requires product features, "
+            "but workflow_context['features'] is not set."
+        )
+
+    if "tasks" not in workflow_context or not workflow_context["tasks"]:
+        raise MissingTasksError(
+            "Program Manager step requires engineering tasks, "
+            "but workflow_context['tasks'] is not set."
+        )
+
     # Program Manager - Knowledge Augmented Prompt Agent
-    persona_program_manager = "You are a Program Manager, you are responsible for defining the features for a product."
+    persona_program_manager = (
+        "You are a Program Manager responsible for compiling user stories, "
+        "product features, and engineering tasks into a complete, coherent project plan."
+    )
 
-    # Program Manager - Knowledge (augmented with user stories)
+    # Program Manager - Knowledge (augmented with workflow context)
     knowledge_program_manager = f"""
-        Features of a product are defined by organizing similar user stories
-        into cohesive, well-scoped feature groups.
+    A project plan consolidates the entire product definition into a structured execution-ready plan.
 
-        USER STORIES:
-        """
+    PRODUCT SPEC:
+    {product_spec}
+    
+    USER STORIES:
+    {workflow_context.get("user_stories")}
 
-    # Instantiate a program_manager_knowledge_agent using 'persona_program_manager' and 'knowledge_program_manager'
-    # (This is a necessary step before TODO 8. Students should add the instantiation code here.)
+    PRODUCT FEATURES:
+    {workflow_context.get("features")}
 
-    program_manager = KnowledgeAugmentedPromptAgent(service=service,
-                                                    persona=persona_program_manager,
-                                                    knowledge=knowledge_program_manager)
+    ENGINEERING TASKS:
+    {workflow_context.get("tasks")}
+
+    The project plan must strictly align with the provided information and
+    must not introduce new scope or functionality.
+    """
+
+    program_manager = KnowledgeAugmentedPromptAgent(
+        service=service,
+        persona=persona_program_manager,
+        knowledge=knowledge_program_manager
+    )
 
     # Program Manager - Evaluation Agent
-    persona_program_manager_eval = "You are an evaluation agent that checks the answers of other worker agents."
-
-    # TODO: 8 - Instantiate a program_manager_evaluation_agent using 'persona_program_manager_eval' and the evaluation criteria below.
-    #                      "The answer should be product features that follow the following structure: " \
-    #                      "Feature Name: A clear, concise title that identifies the capability\n" \
-    #                      "Description: A brief explanation of what the feature does and its purpose\n" \
-    #                      "Key Functionality: The specific capabilities or actions the feature provides\n" \
-    #                      "User Benefit: How this feature creates value for the user"
-    # For the 'agent_to_evaluate' parameter, refer to the provided solution code's pattern.
+    persona_program_manager_eval = (
+        "You are an evaluation agent that validates whether a complete and "
+        "well-structured project plan has been produced."
+    )
 
     program_manager_evaluation_agent = EvaluationAgent(
         service=service,
         persona=persona_program_manager_eval,
         evaluation_criteria=(
-            "The answer should be product features that follow the following structure:\n"
-            "Feature Name: A clear, concise title that identifies the capability\n"
-            "Description: A brief explanation of what the feature does and its purpose\n"
-            "Key Functionality: The specific capabilities or actions the feature provides\n"
-            "User Benefit: How this feature creates value for the user\n"
-            "Features must be derived from the provided user stories and should not "
-            "introduce new functionality beyond the product specification."
+            "The answer must be a complete project plan with the following structure:\n"
+            "Project Overview: High-level summary of the product and goals\n"
+            "User Stories Summary: Consolidated view of user needs\n"
+            "Feature Breakdown: Features mapped from user stories\n"
+            "Engineering Tasks: Tasks required to implement each feature\n"
+            "Dependencies: Logical ordering and cross-feature dependencies\n"
+            "Milestones / Phases: Execution phases or delivery milestones\n"
+            "Risks & Assumptions: Key risks and assumptions\n\n"
+            "The plan must be internally consistent and derived strictly from the "
+            "provided user stories, features, and tasks. No new scope should be introduced."
         ),
         worker_agent=program_manager,
         max_interactions=10
     )
 
-    response = program_manager.respond(step)
-    program_manager.knowledge = (
-        f"Previous User Stories:\n{ workflow_context["user_stories"]}\n\n"
-        "Features of a product are defined by organizing similar user stories "
-        "into cohesive groups derived strictly from the Email Router product specification."
-    )
-
-    validated_response = program_manager_evaluation_agent.evaluate(response)
-    return validated_response
+    validated_response = program_manager_evaluation_agent.evaluate(step)
+    project_plan = validated_response["final_response"]
+    print_product_plan = f"""###########Project Plan given below##########
+           {project_plan}
+       ##########################################################################
+       """
+    print(print_product_plan)
+    return project_plan
 
 
 def development_engineer_support_function(step):
-    response = development_engineer.respond(step)
-    validated_response = development_engineer_evaluation_agent.evaluate(response)
-    return validated_response
+
+    if "user_stories" not in workflow_context or not workflow_context["user_stories"]:
+        raise MissingUserStoriesError(
+            "Development engineer step requires user stories, "
+            "but workflow_context['user_stories'] is not set."
+        )
+
+    user_stories = workflow_context["user_stories"]
+
+    # Development Engineer - Knowledge Augmented Prompt Agent
+    persona_dev_engineer = "You are a Development Engineer, you are responsible for defining the development tasks for a product."
+    knowledge_dev_engineer = f"""Development tasks are defined by identifying what needs to be built to implement each user story.
+    
+    USER STORIES:
+        {user_stories}
+    """
+
+    # Instantiate a development_engineer_knowledge_agent using 'persona_dev_engineer' and 'knowledge_dev_engineer'
+    # (This is a necessary step before TODO 9. Students should add the instantiation code here.)
+
+    development_engineer = KnowledgeAugmentedPromptAgent(
+        service=service,
+        persona=persona_dev_engineer,
+        knowledge=knowledge_dev_engineer
+    )
+
+    # Development Engineer - Evaluation Agent
+    persona_dev_engineer_eval = "You are an evaluation agent that checks the answers of other worker agents."
+    # TODO: 9 - Instantiate a development_engineer_evaluation_agent using 'persona_dev_engineer_eval' and the evaluation criteria below.
+    #                      "The answer should be tasks following this exact structure: " \
+    #                      "Task ID: A unique identifier for tracking purposes\n" \
+    #                      "Task Title: Brief description of the specific development work\n" \
+    #                      "Related User Story: Reference to the parent user story\n" \
+    #                      "Description: Detailed explanation of the technical work required\n" \
+    #                      "Acceptance Criteria: Specific requirements that must be met for completion\n" \
+    #                      "Estimated Effort: Time or complexity estimation\n" \
+    #                      "Dependencies: Any tasks that must be completed first"
+    # For the 'agent_to_evaluate' parameter, refer to the provided solution code's pattern.
+
+    development_engineer_evaluation_agent = EvaluationAgent(
+        service=service,
+        persona=persona_dev_engineer_eval,
+        evaluation_criteria=(
+            "The answer should be tasks following this exact structure:\n"
+            "Task ID: A unique identifier for tracking purposes\n"
+            "Task Title: Brief description of the specific development work\n"
+            "Related User Story: Reference to the parent user story - Exactly the same user story text.\n"
+            "Description: Detailed explanation of the technical work required\n"
+            "Acceptance Criteria: Specific requirements that must be met for completion\n"
+            "Estimated Effort: Time or complexity estimation. The time has to be in hours\n"
+            "Dependencies: Any tasks that must be completed first\n"
+            "Tasks must be implementable, unambiguous, and derived from the defined features."
+            "Ensure that all tasks are included and double check that nothing is missed."
+            "Strict - Ensure that the User Story description is exactly same as the one provided. Do not modify the text"
+            "Strict - Ensure that Estimated Effort is in hours"
+            "Strict - Ensure that No tasks are missed"
+        ),
+        worker_agent=development_engineer,
+        max_interactions=10
+    )
+
+    validated_response = development_engineer_evaluation_agent.evaluate(step)
+
+    engineering_tasks = validated_response["final_response"]
+    workflow_context["tasks"] = engineering_tasks
+    print_engineering_tasks = f"""###########Engineerfing tasks are given below##########
+        {engineering_tasks}
+    ##########################################################################
+    """
+    print(print_engineering_tasks)
+    return engineering_tasks
 
 agents = [
     {
@@ -362,8 +412,8 @@ print("\nDefining workflow steps from the workflow prompt")
 workflow_steps = action_agent.extract_steps_from_prompt(workflow_prompt)
 print("DEBUG:", workflow_steps)
 print("###################- Workflow steps -#########################")
-for step in workflow_steps:
-    print(f"Workflow step - {step}")
+for workflow_step in workflow_steps:
+    print(f"Workflow step - {workflow_step}")
 
 # for idx, step in enumerate(workflow_steps, start=1):
 #     print(f"\n--- Executing workflow step {idx}: {step} ---")

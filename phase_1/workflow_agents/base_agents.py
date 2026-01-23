@@ -314,7 +314,7 @@ class EvaluationAgent:
 
             # 5. Evaluation message structure (temperature=0 via LLMService)
             final_evaluation = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4.1",
                 messages=[
                     {"role": "system", "content": self.persona},
                     {"role": "user", "content": evaluation_prompt},
@@ -346,7 +346,7 @@ class EvaluationAgent:
             )
 
             instructions = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4.1",
                 messages=[
                     {"role": "system", "content": "You are an expert providing correction instructions."},
                     {"role": "user", "content": correction_prompt},
