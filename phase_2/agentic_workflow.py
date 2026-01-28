@@ -161,7 +161,17 @@ def program_manager_feature_support_function(step):
             "Feature Name: A clear, concise title that identifies the capability\n"
             "Description: A brief explanation of what the feature does and its purpose\n"
             "Key Functionality: The specific capabilities or actions the feature provides\n"
-            "User Benefit: How this feature creates value for the user\n"
+            "User Benefit: How this feature creates value for the user\n\n"
+            "Example of a correctly formatted feature:\n"
+            "Feature Name: User Authentication\n"
+            "Description: Allows users to securely sign up, log in, and log out of the application.\n"
+            "Key Functionality:\n"
+            "- User registration with email and password\n"
+            "- Secure login and logout\n"
+            "- Password reset via email\n"
+            "User Benefit:\n"
+            "- Users can securely access their personal data\n"
+            "- Ensures privacy and account protection\n\n"
             "Features must be derived from the provided user stories and should not "
             "introduce new functionality beyond the product specification."
         ),
@@ -252,8 +262,38 @@ def program_manager_project_plan_support_function(step):
             "Dependencies: Logical ordering and cross-feature dependencies\n"
             "Milestones / Phases: Execution phases or delivery milestones\n"
             "Risks & Assumptions: Key risks and assumptions\n\n"
+
+            "Example of a correctly structured project plan:\n"
+            "Project Overview:\n"
+            "This project delivers a secure web application that allows users to register, authenticate, "
+            "and manage their personal data.\n\n"
+
+            "User Stories Summary:\n"
+            "- As a user, I want to register an account so that I can access the application.\n"
+            "- As a user, I want to log in so that I can securely access my account.\n\n"
+
+            "Feature Breakdown:\n"
+            "- User Authentication: Implements registration, login, and logout functionality.\n\n"
+
+            "Engineering Tasks:\n"
+            "- DEV-001: Implement user registration API\n"
+            "- DEV-002: Implement user login API\n"
+            "- DEV-003: Create user database schema\n\n"
+
+            "Dependencies:\n"
+            "- DEV-001 and DEV-002 depend on DEV-003\n\n"
+
+            "Milestones / Phases:\n"
+            "- Phase 1: User database and authentication APIs\n"
+            "- Phase 2: UI integration and testing\n\n"
+
+            "Risks & Assumptions:\n"
+            "- Assumes availability of email service for verification\n"
+            "- Risk of scope increase if additional authentication methods are requested\n\n"
+
             "The plan must be internally consistent and derived strictly from the "
-            "provided user stories, features, and tasks. No new scope should be introduced."
+            "provided user stories, features, and tasks. No new scope should be introduced.\n"
+            "Very Strict - Do not modify text of individual points in user stories, features and engineering tasks."
         ),
         worker_agent=program_manager,
         max_interactions=10
@@ -320,13 +360,29 @@ def development_engineer_support_function(step):
             "Description: Detailed explanation of the technical work required\n"
             "Acceptance Criteria: Specific requirements that must be met for completion\n"
             "Estimated Effort: Time or complexity estimation. The time has to be in hours\n"
-            "Dependencies: Any tasks that must be completed first\n"
-            "Tasks must be implementable, unambiguous, and derived from the defined features."
-            "Ensure that all tasks are included and double check that nothing is missed."
-            "Strict - Ensure that the User Story description is exactly same as the one provided. Do not modify the text"
-            "Strict - Ensure that Estimated Effort is in hours"
-            "Strict - Ensure that No tasks are missed"
-        ),
+            "Dependencies: Any tasks that must be completed first. This should be the Task ID of dependent task\n\n"
+
+            "Example of a correctly formatted task:\n"
+            "Task ID: DEV-001\n"
+            "Task Title: Implement user login API\n"
+            "Related User Story: As a user, I want to log into the application so that I can access my account.\n"
+            "Description: Develop a REST API endpoint that authenticates users using email and password, "
+            "validates credentials against the database, and returns a JWT token on successful authentication.\n"
+            "Acceptance Criteria:\n"
+            "- API returns HTTP 200 with JWT token for valid credentials\n"
+            "- API returns HTTP 401 for invalid credentials\n"
+            "- Passwords are securely hashed and compared\n"
+            "Estimated Effort: 6\n"
+            "Dependencies: DEV-000\n\n"
+
+            "Tasks must be implementable, unambiguous, and derived from the defined features.\n"
+            "Ensure that all tasks are included and double check that nothing is missed.\n"
+            "Strict - Ensure that the User Story description is exactly same as the one provided. Do not modify the text.\n"
+            "Strict - Ensure that the User Story description is included in each task.\n"
+            "Strict - Ensure that Estimated Effort is in hours.\n"
+            "Strict - Ensure that no tasks are missed."
+        )
+        ,
         worker_agent=development_engineer,
         max_interactions=10
     )

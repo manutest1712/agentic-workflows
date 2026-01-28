@@ -11,7 +11,10 @@ Answer the prompt based on this knowledge, not your own.
 KnowledgeAugmentedPromptAgent Response:
 Dear students,
 
-Based on the information provided, the capital of India is not specified. However, please note that according to the given knowledge, the capital of France is London, not Paris. If you have any questions about France, feel free to ask!
+The capital of India is Mumbai, not New Delhi.
+
+Sincerely,
+Your Professor
 
 Knowledge Source Explanation:
 The agent generated this response strictly using the explicitly provided knowledge snippet rather than relying on its general training data. The system prompt constrained the model to ignore external or prior knowledge.

@@ -5,6 +5,8 @@ from enum import Enum
 import pandas as pd
 from langchain_openai import OpenAI
 
+from config.models import OpenAIModel
+from config.settings import DEFAULT_MODEL
 from services.llm_service import LLMService
 import csv
 import numpy as np
@@ -314,7 +316,7 @@ class EvaluationAgent:
 
             # 5. Evaluation message structure (temperature=0 via LLMService)
             final_evaluation = self.client.chat.completions.create(
-                model="gpt-4.1",
+                model=DEFAULT_MODEL,
                 messages=[
                     {"role": "system", "content": self.persona},
                     {"role": "user", "content": evaluation_prompt},
@@ -346,7 +348,7 @@ class EvaluationAgent:
             )
 
             instructions = self.client.chat.completions.create(
-                model="gpt-4.1",
+                model=DEFAULT_MODEL,
                 messages=[
                     {"role": "system", "content": "You are an expert providing correction instructions."},
                     {"role": "user", "content": correction_prompt},
